@@ -1,4 +1,4 @@
-(defproject mthomure/clj-gym "0.1.0"
+(defproject mthomure/clj-gym "0.1.1-SNAPSHOT"
   :description "Clojure Bindings for OpenAI's gym-http-api server"
   :url "http://github.com/mthomure/clj-gym"
   :license {:name "Eclipse Public License"

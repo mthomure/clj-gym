@@ -10,41 +10,41 @@
                     :method method
                     :content-type :json :accept :json}
                    (when body {:body (json/generate-string body)}))]
-    (-> (http/request req) :body (json/parse-string true))))
+    (-> (http/request req) :body (json/parse-string false))))
 
 (defn create
   "Create instance of environment."
   [env-id]
-  (:instance_id (req :post nil {:env_id env-id})))
+  (get (req :post nil {:env_id env-id}) "instance_id"))
 
 (defn envs
   "All running environments."
   []
-  (:all_envs (req :get nil nil)))
+  (get (req :get nil nil) "all_envs"))
 
 (defn reset
   "Reset environment and return initial observation."
   [instance-id]
-  (req :post (str (name instance-id) "/reset/") nil))
+  (req :post (str instance-id "/reset/") nil))
 
 (defn step
   "Step though environment using action.
-  Return map of {:observation _ :reward _ :done _ :info _}"
+  Return map of {\"observation\" _ \"reward\" _ \"done\" _ \"info\" _}"
   [instance-id action]
-  (req :post (str (name instance-id) "/step/") {:action action}))
+  (req :post (str instance-id "/step/") {:action action}))
 
 (defn action-space
   "Name and dimensions/bounds of action_space."
   [instance-id]
-  (:info (req :get (str (name instance-id) "/action_space/") nil)))
+  (get (req :get (str instance-id "/action_space/") nil) "info"))
 
 (defn observation-space
   "Name and dimensions/bounds of observation_space."
   [instance-id]
-  (:info (req :get (str (name instance-id) "/observation_space/") nil)))
+  (get (req :get (str instance-id "/observation_space/") nil) "info"))
 
 (defn start-monitor [instance-id directory & {:keys [force? resume?]}]
-  (req :post (str (name instance-id) "/monitor/start/")
+  (req :post (str instance-id "/monitor/start/")
        {:directory directory
         :force (if force? true false)
         :resume (if resume? true false)}))
@@ -52,4 +52,4 @@
 (defn close-monitor
   "Flush monitor data to disk."
   [instance-id]
-  (req :post (str (name instance-id) "/monitor/close/") nil))
+  (req :post (str instance-id "/monitor/close/") nil))
