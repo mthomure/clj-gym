@@ -56,6 +56,24 @@ The server is available from DockerHub:
 docker run -p 5000:5000 mthomure/openai-gym-server
 ```
 
+For example, to access monitor files, launch the server:
+
+```
+docker run -p 5000:5000 -v /tmp:/tmp mthomure/openai-gym-server
+```
+
+Then open a repl and run:
+
+``` clojure
+(let [id (g/create "CartPole-v0")]
+  (g/start-monitor id "/tmp/monitor")
+  (g/reset id)
+  (g/step id 0)
+  (g/close-monitor id))
+```
+
+The monitor files should be `/tmp/monitor` on the host filesystem.
+
 ## Rebuilding the Docker Image
 
 ```
