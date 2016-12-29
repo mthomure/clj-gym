@@ -50,13 +50,7 @@ Talking to a remote server instance? Use the `*url*` dynamic variable.
 
 ## Running the Server
 
-The server is available from DockerHub:
-
-```
-docker run -p 5000:5000 mthomure/openai-gym-server
-```
-
-To render a video and access it in the monitor files:
+The server is available from DockerHub. To render a video and access it in the monitor files:
 
 ```
 docker run -p 5000:5000 -v /tmp:/tmp mthomure/openai-gym-server
@@ -72,10 +66,10 @@ Then run in a repl:
   (g/close-monitor id))
 ```
 
-The monitor files should be `/tmp/monitor` on the host filesystem. Note the
+The monitor files should be in `/tmp/monitor` on the host filesystem. Note the
 use of `:video-callable` and `:render`, above.
 
-Warning: If you try to `start-monitor` with an existing directory, you'll get an
+Warning: If you `start-monitor` with an existing directory, you'll get an
 HTTP 500 error.
 
 ## Rebuilding the Docker Image
