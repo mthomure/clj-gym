@@ -30,8 +30,9 @@
 (defn step
   "Step though environment using action.
   Return map of {\"observation\" _ \"reward\" _ \"done\" _ \"info\" _}"
-  [instance-id action]
-  (req :post (str instance-id "/step/") {:action action}))
+  [instance-id action & {:keys [render]}]
+  (req :post (str instance-id "/step/") {:action action
+                                         :render (if render true false)}))
 
 (defn action-space
   "Name and dimensions/bounds of action_space."
@@ -43,11 +44,15 @@
   [instance-id]
   (get (req :get (str instance-id "/observation_space/") nil) "info"))
 
-(defn start-monitor [instance-id directory & {:keys [force? resume?]}]
+(defn start-monitor [instance-id directory & {:keys [force? resume? video-callable]}]
   (req :post (str instance-id "/monitor/start/")
        {:directory directory
         :force (if force? true false)
-        :resume (if resume? true false)}))
+        :resume (if resume? true false)
+        :video_callable (case video-callable
+                          true 1
+                          nil false
+                          video-callable)}))
 
 (defn close-monitor
   "Flush monitor data to disk."
