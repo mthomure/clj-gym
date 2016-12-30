@@ -70,7 +70,7 @@ The monitor files should be in `/tmp/monitor` on the host filesystem. Note the
 use of `:video-callable` and `:render`, above.
 
 Warning: If you `start-monitor` with an existing directory, you'll get an
-HTTP 500 error.
+HTTP 500 error. In this case, use `:force?` or `:resume?`.
 
 ## Rebuilding the Docker Image
 
