@@ -5,12 +5,12 @@
 
 (def ^:dynamic *url* "http://localhost:5000")
 
-(defn- req [method rel-url body]
+(defn- req [method rel-url body & [kw?]]
   (let [req (merge {:url (str *url* "/v1/envs/" rel-url)
                     :method method
                     :content-type :json :accept :json}
                    (when body {:body (json/generate-string body)}))]
-    (-> (http/request req) :body (json/parse-string false))))
+    (-> (http/request req) :body (json/parse-string kw?))))
 
 (defn create
   "Create instance of environment."
